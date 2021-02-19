@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Financial Tracker</title>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="./js/vendor/jquery-3.5.1.min.js"></script>
+  <script src="./js/vendor/moment.js"></script>
+
+  <link href="css/fontawesome-free-5.14.0-web/css/all.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/index.css">  
+
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-auth.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  <script src="./js/vendor/chartjs-plugin-datalabels.min.js"></script>
+
+
+  <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="icon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="icon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="icon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="icon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="icon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="icon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="icon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="icon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+  <meta name="msapplication-TileColor" content="#3C4564">
+  <meta name="msapplication-TileImage" content="icon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#3C4564">
+
+  <link rel="manifest" href="./manifest.json">
+</head>
+<body>
+
+  <!------------ TITLE -------------------->
+  <h1 class="textCenter">FINANCIAL TRACKER</h1>
+  <!--------------------------------------->
+
+  <!------------- LOGIN ------------------->
+  <div id="loginDiv" class="textCenter">
+    <label for="emailInput">Email</label><br>
+    <input type="email" id="emailInput" onkeydown="loginWithEnter(event)"><br>
+    <label for="passwordInput">Password</label><br>
+    <input type="password" id="passwordInput" onkeydown="loginWithEnter(event)"><br>
+    <button id="loginButton" onClick="tryLogIn()">Login</button>
+    <div id="versionDiv">v2021.02.03</div>
+  </div>
+  <!--------------------------------------->
+
+  <div class="container" id="postLoginDiv">
+    <div class="row" id="postLoginRow">
+
+      <!---------- ENTRY LIST ----------------->
+      <div class="col-md-8">
+        <div id="entryListDiv">
+        <h2 class="textCenter">ENTRY LIST</h2>
+
+        <div class="row">
+          <div class="col-md-6">
+            <table>
+              <tr>
+                <td class="textRight">Balance  <i class="fas fa-wallet"></i></td>
+                <td class="textLeft" id="balanceField">NaN</td>
+                <td class="smallWidth">€</td>
+              </tr>
+              <tr>
+                <td class="textRight">Savings  <i class="fas fa-piggy-bank"></i></td>
+                <td class="textLeft"><input id="savingsField" value="NaN" disabled></td>
+                <td class="smallWidth">€</td>
+              </tr>
+              <tr>
+                <td class="textRight">Income  <i class="fas fa-money-bill-wave-alt"></i></td>
+                <td id="positiveSumField" class="greenAmount textLeft">NaN</td>
+                <td class="smallWidth">€</td>
+              </tr>
+              <tr>
+                <td class="textRight">Spendings  <i class="fas fa-comment-dollar"></i></td>
+                <td id="negativeSumField" class="redAmount textLeft">NaN</td>
+                <td class="smallWidth">€</td>
+              </tr>
+              <tr>
+                <td class="textRight">Untracked  <i class="far fa-question-circle"></i></td>
+                <td class="grayAmount textLeft" id="untrackedField">NaN</td>
+                <td class="smallWidth">€</td>
+              </tr>
+              <tr>
+                <td class="textRight">Total  <i class="fas fa-cash-register"></i></td>
+                <td class="textLeft" id="sumField">NaN</td>
+                <td class="smallWidth">€</td>
+              </tr>              
+            </table>
+          </div>
+
+          <div class="col-md-6">
+            <table id="intervalSelectTable">
+              <tr>
+                <td><label for="entriesDateStart">Select start date: </label></td>
+                <td class="dateEntryRight"><input id="entriesDateStart" type="date" name="Select start date"/><br></td>
+              </tr>
+              <tr>
+                <td><label for="entriesDateEnd">Select end date: </label></td>
+                <td class="dateEntryRight"><input id="entriesDateEnd" type="date" name="Select end date"/><br></td>
+              </tr>
+              <tr>
+                <td><label for="showErrorEntriesCheckbox" id="showErrorEntriesLabel">Show balance adjustments: </label></td>
+                <td id="showErrorEntriesTd"><input type="checkbox" id="showErrorEntriesCheckbox" checked="false"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button id="reloadListButton" onclick="fetchEntryList()">Reload list</button></td>
+              </tr>
+            </table>            
+          </div>
+        </div>
+
+        <table id="entryTable">
+          <th>No.</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Comment</th>
+
+          <tr>
+            <td>XX-XX</td>
+            <td>type</td>
+            <td>X €</td>
+            <td>comment</td>
+            <td><button>Delete</button></td>
+            <td><button>Silent delete</button></td>
+          </tr>
+        </table>
+        </div>
+      </div>
+      <!--------------------------------------->
+
+      <!-------- NEW ENTRY -------------------->
+      <div class="col-md-4">
+        <div id="newEntryDiv">
+          <h2 class="textCenter">NEW ENTRY</h2>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label for="amountInput">Amount, €:</label><br>
+              <input type="text" id="amountInput" value="0" oninvalid="tryFixAmount()"><br>
+            </div>
+            <div class="col-md-6" id="showAddDaysCol">
+              <div id="showAddDaysText" class="textCenter" onclick="showAddDays()">Do not use current date</div>
+            </div>
+            <div class="col-md-6" id="selectDateCol">
+              <label for="entrySelectDate">Days to add:</label>
+              <input id="entrySelectDate" type="number" value="0"/><br>
+            </div>
+          </div>
+
+          <div class="row" id="notNecessaryRow">
+            <div class="col">
+              <label for="notNecessaryCheckbox" id="notNecessaryLabel">Not necessary spending:</label>
+            </div>
+            <div class="col" id="notNecessaryCheckBoxCol">
+              <input type="checkbox" id="notNecessaryCheckbox" checked="false">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <label for="commentInput">Comment:</label><br>
+              <input type="text" id="commentInput" value=" "><br>
+            </div>
+          </div>
+
+          <label>Entry type:</label><br>
+          <ul class="entryTypeList" id="incomeTypeList"></ul> <!-- filled on runtime by index.js -->
+          <ul class="entryTypeList" id="spendingTypeList"></ul><!-- filled on runtime by index.js -->
+          
+          <button id="submitButton" onClick="submitEntry()">SUBMIT</button>
+        </div>
+
+        <div id="adjustBalanceDiv">
+          <h2 class="textCenter">ADJUST BALANCE</h2>
+
+          <div class="row">
+            <div class="col-md-6">
+              <input id="adjustedBalanceInput">
+            </div>
+            <div class="col-md-6">
+              <button id="adjustBalanceButton" onClick="adjustBalance()">SUBMIT</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="adjustSavingsDiv">
+          <h2 class="textCenter">ADJUST SAVINGS</h2>
+
+          <div class="row">
+            <div class="col-md-6">
+              <input id="adjustedSavingsInput">
+            </div>
+            <div class="col-md-6">
+              <button id="adjustSavingsButton" onClick="updateSavings()">SUBMIT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--------------------------------------->
+
+    </div> <!-- row -->
+
+    <div class="container" id="statisticsDiv" class="textCenter">
+      <h2 class="textCenter">STATISTICS</h2><br>
+
+      <div class="selectChartDiv row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <button id="loadChartButton">Load chart</button>
+          <select id="chartTypes" name="Select chart type">
+            <option value="balance">Balance By Date</option>
+            <option value="income&spending">Entries By Category</option>
+            <option value="byMonth">Income & Spending by Month</option>
+          </select><br>
+
+          <label for="includeBalanceAdjustmentsCheckbox">Include balance adjustments:</label>
+          <input type="checkbox" checked="false" id="includeBalanceAdjustmentsCheckbox">
+          <label for="showOnlyNecessaryCheckbox">Show only necessary entries</label>
+          <input type="checkbox" checked="false" id="showOnlyNecessaryCheckbox">
+        </div>
+        <div class="col-md-4">
+          <label for="inputDateStart">Select start date: </label>
+          <input id="inputDateStart" type="date" name="Select start date"/><br>
+          <label for="inputDateEnd">Select end date: </label>
+          <input id="inputDateEnd" type="date" name="Select end date"/>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+
+      <div id="statisticsChartDiv"></div>
+      <div id="statisticsEntryListDiv" style="display: none; text-align: center;">
+        <select id="statisticsEntryListSelect"></select>
+        <table id="statisticsEntryList"></table>
+      </div>
+    </div>
+  </div> <!-- post login div -->
+
+  <!-------- NOTIFICATIONS ---------------->
+    <ul id="notificationList"></ul>
+  <!--------------------------------------->
+
+  <!--------- ENTRY EDIT MODAL ------------>
+  <div class="modal fade" id="editEntryModal" tabindex="-1" role="dialog" aria-labelledby="modalLargeDefaultLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalLargeDefaultLabel">Edit entry</h4> 
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              Date
+            </div>
+            <div class="col">
+              <input id="editEntryDate" type="date"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Type
+            </div>
+            <div class="col">
+              <select id="editEntryType"></select> <!-- filled on runtime by index.js -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Necessary
+            </div>
+            <div class="col">
+              <input type="checkbox" id="editEntryNecessary">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Amount
+            </div>
+            <div class="col">
+              <input type="text" id="editEntryAmount" oninvalid="tryFixAmount()">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              Comment
+            </div>
+            <div class="col">
+              <input type="text" id="editEntryComment">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-default btn-secondary" onClick="deleteEntry(false)">Delete</button>
+          <button type="button" class="btn btn-default btn-secondary" onClick="deleteEntry(true)">Silent delete</button>
+          <button type="button" class="btn btn-default btn-primary" id="editEntrySaveButton">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------->
+
+  <script src="./js/appUpdate.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/notifications.js"></script>
+  <script src="./js/balanceSavings.js"></script>
+  <script src="./js/entry.js"></script>
+  <script src="./js/entryListUI.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="./js/chart.js"></script>
+
+  <script>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('https://financial-tracker-b3c68.web.app/sw.js');
+    };
+  </script>
+</body>
+</html>

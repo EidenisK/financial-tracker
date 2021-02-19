@@ -1,0 +1,444 @@
+$primary-color: #3C4564;
+$background-color: #E0EAFC;
+$spending-color: #F0A84B;
+$income-color: #86ED7E;
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: "Segoe UI", "Arial", sans-serif;
+	color: $primary-color;
+
+	height: 100%;
+	background: $background-color;  /* fallback for old browsers */
+	background-attachment: fixed;
+	background-image: url("../bg.jpg");
+	background-size: cover;
+}
+
+h1 {
+	font-size: 5rem;
+	margin: 0;
+}
+
+h2, h1 {
+	font-weight: bold;
+}
+
+h2 {
+	margin-bottom: 1rem;
+}
+
+.textCenter {
+	text-align: center;
+}
+
+.textRight {
+	text-align: right;
+}
+
+/* ------------- LOGIN ---------------------- */
+#loginDiv {
+	margin-top: 20vh;
+
+	input {
+		border: none;
+		background: rgba(255,255,255,0.6);
+		text-align: center;
+		width: 18rem;
+		margin-bottom: 2rem;
+	}
+
+	button {
+		border: none;
+		padding: 0.5rem;
+		width: 8rem;
+	}
+}
+/* ------------------------------------------ */
+
+#statisticsDiv, #newEntryDiv, #entryListDiv, #adjustBalanceDiv, #adjustSavingsDiv {
+	background: rgba(255,255,255,0.4);
+	margin: 1rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	height: inherit;
+	padding: 1rem;
+}
+
+#postLoginDiv {
+	display: none;
+	margin: 0;
+	width: 100%;
+	max-width: 100vw;
+	margin-top: 2rem;
+	padding: 0;
+
+	button {
+		border: none;
+		padding: 0.5rem;
+		background-color: $background-color;
+	}
+}
+
+#postLoginRow {
+	max-width: 100%;
+	margin: 0;
+}
+
+/* ----------- ENTRY LIST ---------------- */
+#entryListDiv {
+	#entryTable {
+		margin-top: 1rem;
+	}
+
+	table {
+		width: 100%;
+
+		#incomeEntryType, #spendingEntryType, #errorEntryType {
+			margin: 0.5rem;
+		}
+	}
+
+	#entryTable, #enryTable th, #entryTable td {
+		border-collapse: collapse;
+		text-align: center;
+	}
+
+	#entryTable tr, #entryTable th {
+		border-bottom: 1px solid #3C4564;
+	}
+
+	#savingsField {
+		background-color: transparent;
+		border: none;
+		width: 3rem;
+		text-align: left;
+		font-weight: bold;
+	}
+
+	button {
+		margin-right: 1rem;
+	}
+
+	.redAmount {
+		color: red;
+	}
+
+	.greenAmount {
+		color: green;
+	}
+
+	.grayAmount {
+		color: gray;
+	}
+
+	#balanceField, #positiveSumField, #negativeSumField {
+		margin-bottom: 0;
+	}
+
+	.inlineParagraph {
+		display: inline;
+	}
+
+	.lastTableRow {
+		border-bottom: none;
+		button {
+			margin-top: 1rem;
+		}
+	}
+
+	.borderedIcon {
+		border: 1px solid black;
+	}
+
+	.smallWidth {
+		width: 2rem;
+	}
+
+	.textLeft {
+		text-align: left;
+		padding-left: 1rem;
+		max-width: 3rem;
+	}
+
+	#reloadListButton {
+		width: 100%;
+	}
+
+	#intervalSelectTable {
+		width: auto;
+		height: 100%;
+	}
+
+	.dateEntryRight {
+		text-align: right;
+	}
+
+	#showErrorEntriesLabel {
+		margin-bottom: 0;
+	}
+
+	#showErrorEntriesTd {
+		text-align: center;
+	}
+
+	#savingsField {
+		color: #3C4564;
+		font-weight: normal;
+	}
+}
+/* --------------------------------------- */
+
+/* ------------- NEW ENTRY ------------------- */
+#newEntryDiv, #adjustBalanceDiv, #adjustSavingsDiv {
+	button {
+		margin-top: 1rem;
+		width: 100%;
+	}
+
+	input {
+		border: none;
+		background: rgba(255,255,255,0.6);
+		text-align: center;
+	}
+
+	#commentInput, #entrySelectDate {
+		text-align: left;
+		margin-bottom: 1rem;
+		width: 100%;
+		height: 3rem;
+	}
+
+	#entrySelectDate {
+		text-align: center;
+	}
+
+	#selectDateCol {
+		margin-top: 0;
+	}
+
+	#showAddDaysText {
+		margin-bottom: 1rem;
+	}
+
+	#showAddDaysCol {
+		display: none;
+	}
+	
+	#notNecessaryCheckBoxCol {
+		text-align: center;
+	}
+}
+
+#amountInput {
+	height: 3rem;
+	text-align: center;
+	width: 100%;
+}
+
+#adjustedBalanceInput, #adjustBalanceButton, #adjustedSavingsInput, #adjustSavingsButton {
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+
+#adjustBalanceDiv button, #adjustSavingsDiv button {
+	margin-top: 0;
+}
+
+#commentInput {
+	height: 2rem;
+}
+.entryTypeList {
+	padding-left: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.entryTypeList {
+	margin-bottom: 0;
+}
+.entryTypeList li {
+	margin-bottom: 0.5rem;
+	flex-grow: 1;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+	text-align: center;
+}
+
+.entryTypeList li, #incomeEntryType, #spendingEntryType, #errorEntryType {
+	display: inline;
+	border-radius: 0.5rem;
+	/*width: auto;*/
+	padding: 0.5rem;
+	display: inline-block;
+}
+
+#incomeTypeList li, #incomeEntryType {
+	background-color: $income-color;
+	list-style-type: none;
+}
+
+#spendingTypeList li, #spendingEntryType {
+	background-color: $spending-color;
+	list-style-type: none;
+}
+
+#errorEntryType {
+	background-color: gray !important;
+	list-style-type: none;
+}
+
+#selectedType {
+	border: 1px solid $primary-color;
+}
+/* ------------------------------------------- */
+
+/* ---------------- STATISTTICS ------------- */
+#statisticsDiv {
+	margin-left: 1rem;
+	margin-right: 1rem;
+	width: auto;
+	max-width: 100%;
+
+	button, select {
+		height: 3rem;
+	}
+
+	button {
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	canvas {
+		display: none;
+	}
+
+	.selectChartDiv {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+
+	#statisticsEntryList {
+		margin: auto;
+		margin-top: 1rem;
+
+		td {
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+		}
+	}
+}
+/* ------------------------------------------ */
+
+/* ----------- NOTIFICATIONS ---------------- */
+#notificationList {
+	position: fixed;
+	bottom: 0%;
+	right: 0%;
+	width: 30%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.notification {
+	padding: 0.5rem 0rem 0.5rem 0rem;
+	margin: 0;
+	text-align: center;
+}
+
+#versionDiv {
+	position: fixed;
+	bottom: 0%;
+	left: 0%;
+}
+/* -------------------------------------------- */
+
+/* -------------- MOBILE OPTIMIZATION -------------- */
+@media screen and(max-width: 600px) {
+	h1 {
+		font-size: 4rem;
+	}
+
+	#postLoginDiv, #postLoginRow {
+		margin: 0;
+	}
+
+	#notificationList {
+		width: 100%;
+	}
+
+	#entryListDiv, #newEntryDiv, #adjustBalanceDiv, #adjustSavingsDiv {
+		margin-left: 0;
+		margin-right: 0;
+		padding-bottom: 1rem;
+		.col-md-6 {
+			margin-top: 1rem;
+		}
+	}
+
+	#adjustBalanceDiv, #adjustSavingsDiv {
+		input {
+			min-height: 3rem;
+		}
+	}
+
+	.hideOnMobile {
+		display: none;
+	}
+
+	select {
+		margin-bottom: 1rem;
+	}
+
+	.textRight {
+		width: 50%;
+	}
+
+	#intervalSelectTable {
+		width: 100% !important;
+		margin-top: 1rem;
+	}
+
+	#entryTable {
+		margin-top: 2rem !important;
+	}
+
+	#amountInput {
+		width: 100%;
+		margin-bottom: 1rem;
+	}
+
+	#reloadListButton {
+		margin-top: 1rem;
+	}
+
+	#selectDateCol {
+		display: none;
+	}
+
+	#showAddDaysCol {
+		display: block !important;
+	}
+}
+/* ------------------------------------------------- */
+
+/* -------------- ENTRY EDIT MODAL ----------------- */
+#editEntryModal {
+	.modal-header {
+		display: block;
+	}
+
+	.row {
+		margin-bottom: 0.5rem;
+	}
+
+	#editEntryDate, #editEntryType, #editEntryAmount, #editEntryComment {
+		width: 100%;
+	}
+}
+/* ------------------------------------------------- */
