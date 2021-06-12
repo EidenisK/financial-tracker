@@ -178,8 +178,6 @@ $("#inputDateStart").val(dateStart.format("YYYY-MM-DD"));
 
 $("#includeBalanceAdjustmentsCheckbox").prop("checked", false);
 $("#showErrorEntriesCheckbox").prop("checked", false);
-$("#notNecessaryCheckbox").prop("checked", false);
-$("#showOnlyNecessaryCheckbox").prop("checked", false);
 $("#entrySelectDate").val(0);
 
 // populate new entry type list

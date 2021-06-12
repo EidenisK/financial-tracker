@@ -1,6 +1,5 @@
 html {
-  height: 100%;
-}
+  height: 100%; }
 
 body {
   font-family: "Segoe UI", "Arial", sans-serif;
@@ -10,46 +9,37 @@ body {
   /* fallback for old browsers */
   background-attachment: fixed;
   background-image: url("../bg.jpg");
-  background-size: cover;
-}
+  background-size: cover; }
 
 h1 {
   font-size: 5rem;
-  margin: 0;
-}
+  margin: 0; }
 
 h2, h1 {
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 h2 {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 
 .textCenter {
-  text-align: center;
-}
+  text-align: center; }
 
 .textRight {
-  text-align: right;
-}
+  text-align: right; }
 
 /* ------------- LOGIN ---------------------- */
 #loginDiv {
-  margin-top: 20vh;
-}
-#loginDiv input {
-  border: none;
-  background: rgba(255, 255, 255, 0.6);
-  text-align: center;
-  width: 18rem;
-  margin-bottom: 2rem;
-}
-#loginDiv button {
-  border: none;
-  padding: 0.5rem;
-  width: 8rem;
-}
+  margin-top: 20vh; }
+  #loginDiv input {
+    border: none;
+    background: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    width: 18rem;
+    margin-bottom: 2rem; }
+  #loginDiv button {
+    border: none;
+    padding: 0.5rem;
+    width: 8rem; }
 
 /* ------------------------------------------ */
 #statisticsDiv, #newEntryDiv, #entryListDiv, #adjustBalanceDiv, #adjustSavingsDiv {
@@ -58,8 +48,7 @@ h2 {
   margin-top: 2rem;
   margin-bottom: 2rem;
   height: inherit;
-  padding: 1rem;
-}
+  padding: 1rem; }
 
 #postLoginDiv {
   display: none;
@@ -67,196 +56,150 @@ h2 {
   width: 100%;
   max-width: 100vw;
   margin-top: 2rem;
-  padding: 0;
-}
-#postLoginDiv button {
-  border: none;
-  padding: 0.5rem;
-  background-color: #E0EAFC;
-}
+  padding: 0; }
+  #postLoginDiv button {
+    border: none;
+    padding: 0.5rem;
+    background-color: #E0EAFC; }
 
 #postLoginRow {
   max-width: 100%;
-  margin: 0;
-}
+  margin: 0; }
 
 /* ----------- ENTRY LIST ---------------- */
 #entryListDiv #entryTable {
-  margin-top: 1rem;
-}
+  margin-top: 1rem; }
 #entryListDiv table {
-  width: 100%;
-}
-#entryListDiv table #incomeEntryType, #entryListDiv table #spendingEntryType, #entryListDiv table #errorEntryType {
-  margin: 0.5rem;
-}
+  width: 100%; }
+  #entryListDiv table #incomeEntryType, #entryListDiv table #spendingEntryType, #entryListDiv table #errorEntryType {
+    margin: 0.5rem; }
 #entryListDiv #entryTable, #entryListDiv #enryTable th, #entryListDiv #entryTable td {
   border-collapse: collapse;
-  text-align: center;
-}
+  text-align: center; }
 #entryListDiv #entryTable tr, #entryListDiv #entryTable th {
-  border-bottom: 1px solid #3C4564;
-}
+  border-bottom: 1px solid #3C4564; }
 #entryListDiv #savingsField {
   background-color: transparent;
   border: none;
   width: 3rem;
   text-align: left;
-  font-weight: bold;
-}
+  font-weight: bold; }
 #entryListDiv button {
-  margin-right: 1rem;
-}
+  margin-right: 1rem; }
 #entryListDiv .redAmount {
-  color: red;
-}
+  color: red; }
 #entryListDiv .greenAmount {
-  color: green;
-}
+  color: green; }
 #entryListDiv .grayAmount {
-  color: gray;
-}
+  color: gray; }
 #entryListDiv #balanceField, #entryListDiv #positiveSumField, #entryListDiv #negativeSumField {
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
 #entryListDiv .inlineParagraph {
-  display: inline;
-}
+  display: inline; }
 #entryListDiv .lastTableRow {
-  border-bottom: none;
-}
-#entryListDiv .lastTableRow button {
-  margin-top: 1rem;
-}
+  border-bottom: none; }
+  #entryListDiv .lastTableRow button {
+    margin-top: 1rem; }
 #entryListDiv .borderedIcon {
-  border: 1px solid black;
-}
+  border: 1px solid black; }
 #entryListDiv .smallWidth {
-  width: 2rem;
-}
+  width: 2rem; }
 #entryListDiv .textLeft {
   text-align: left;
   padding-left: 1rem;
-  max-width: 3rem;
-}
+  max-width: 3rem; }
 #entryListDiv #reloadListButton {
-  width: 100%;
-}
+  width: 100%; }
 #entryListDiv #intervalSelectTable {
   width: auto;
-  height: 100%;
-}
+  height: 100%; }
 #entryListDiv .dateEntryRight {
-  text-align: right;
-}
+  text-align: right; }
 #entryListDiv #showErrorEntriesLabel {
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
 #entryListDiv #showErrorEntriesTd {
-  text-align: center;
-}
+  text-align: center; }
 #entryListDiv #savingsField {
   color: #3C4564;
-  font-weight: normal;
-}
+  font-weight: normal; }
 
 /* --------------------------------------- */
 /* ------------- NEW ENTRY ------------------- */
 #newEntryDiv button, #adjustBalanceDiv button, #adjustSavingsDiv button {
   margin-top: 1rem;
-  width: 100%;
-}
+  width: 100%; }
 #newEntryDiv input, #adjustBalanceDiv input, #adjustSavingsDiv input {
   border: none;
   background: rgba(255, 255, 255, 0.6);
-  text-align: center;
-}
+  text-align: center; }
 #newEntryDiv #commentInput, #newEntryDiv #entrySelectDate, #adjustBalanceDiv #commentInput, #adjustBalanceDiv #entrySelectDate, #adjustSavingsDiv #commentInput, #adjustSavingsDiv #entrySelectDate {
   text-align: left;
   margin-bottom: 1rem;
   width: 100%;
-  height: 3rem;
-}
+  height: 3rem; }
 #newEntryDiv #entrySelectDate, #adjustBalanceDiv #entrySelectDate, #adjustSavingsDiv #entrySelectDate {
-  text-align: center;
-}
+  text-align: center; }
 #newEntryDiv #selectDateCol, #adjustBalanceDiv #selectDateCol, #adjustSavingsDiv #selectDateCol {
-  margin-top: 0;
-}
+  margin-top: 0; }
 #newEntryDiv #showAddDaysText, #adjustBalanceDiv #showAddDaysText, #adjustSavingsDiv #showAddDaysText {
-  margin-bottom: 1rem;
-}
+  margin-bottom: 1rem; }
 #newEntryDiv #showAddDaysCol, #adjustBalanceDiv #showAddDaysCol, #adjustSavingsDiv #showAddDaysCol {
-  display: none;
-}
+  display: none; }
 #newEntryDiv #notNecessaryCheckBoxCol, #adjustBalanceDiv #notNecessaryCheckBoxCol, #adjustSavingsDiv #notNecessaryCheckBoxCol {
-  text-align: center;
-}
+  text-align: center; }
 
 #amountInput {
   height: 3rem;
   text-align: center;
-  width: 100%;
-}
+  width: 100%; }
 
 #adjustedBalanceInput, #adjustBalanceButton, #adjustedSavingsInput, #adjustSavingsButton {
   height: 100%;
   width: 100%;
-  text-align: center;
-}
+  text-align: center; }
 
 #adjustBalanceDiv button, #adjustSavingsDiv button {
-  margin-top: 0;
-}
+  margin-top: 0; }
 
 #commentInput {
-  height: 2rem;
-}
+  height: 2rem; }
 
 .entryTypeList {
   padding-left: 0;
   display: flex;
-  flex-wrap: wrap;
-}
+  flex-wrap: wrap; }
 
 .entryTypeList {
-  margin-bottom: 0;
-}
+  margin-bottom: 0; }
 
 .entryTypeList li {
   margin-bottom: 0.5rem;
   flex-grow: 1;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
-  text-align: center;
-}
+  text-align: center; }
 
 .entryTypeList li, #incomeEntryType, #spendingEntryType, #errorEntryType {
   display: inline;
   border-radius: 0.5rem;
   /*width: auto;*/
   padding: 0.5rem;
-  display: inline-block;
-}
+  display: inline-block; }
 
 #incomeTypeList li, #incomeEntryType {
   background-color: #86ED7E;
-  list-style-type: none;
-}
+  list-style-type: none; }
 
 #spendingTypeList li, #spendingEntryType {
   background-color: #F0A84B;
-  list-style-type: none;
-}
+  list-style-type: none; }
 
 #errorEntryType {
   background-color: gray !important;
-  list-style-type: none;
-}
+  list-style-type: none; }
 
 #selectedType {
-  border: 1px solid #3C4564;
-}
+  border: 1px solid #3C4564; }
 
 /* ------------------------------------------- */
 /* ---------------- STATISTTICS ------------- */
@@ -264,30 +207,30 @@ h2 {
   margin-left: 1rem;
   margin-right: 1rem;
   width: auto;
-  max-width: 100%;
-}
-#statisticsDiv button, #statisticsDiv select {
-  height: 3rem;
-}
-#statisticsDiv button {
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-}
-#statisticsDiv canvas {
-  display: none;
-}
-#statisticsDiv .selectChartDiv {
+  max-width: 100%; }
+  #statisticsDiv button, #statisticsDiv select {
+    height: 3rem; }
+  #statisticsDiv button {
+    margin-right: 1rem;
+    margin-bottom: 1rem; }
+  #statisticsDiv canvas {
+    display: none; }
+  #statisticsDiv .selectChartDiv {
+    text-align: center;
+    margin-bottom: 2rem; }
+  #statisticsDiv #statisticsEntryList {
+    margin: auto;
+    margin-top: 1rem; }
+    #statisticsDiv #statisticsEntryList td {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem; }
+
+#monthTable {
   text-align: center;
-  margin-bottom: 2rem;
-}
-#statisticsDiv #statisticsEntryList {
-  margin: auto;
-  margin-top: 1rem;
-}
-#statisticsDiv #statisticsEntryList td {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
+  width: 100%; }
+  #monthTable td, #monthTable th {
+    border: 1px dashed black;
+    border-collapse: collapse; }
 
 /* ------------------------------------------ */
 /* ----------- NOTIFICATIONS ---------------- */
@@ -298,98 +241,76 @@ h2 {
   width: 30%;
   list-style-type: none;
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 .notification {
   padding: 0.5rem 0rem 0.5rem 0rem;
   margin: 0;
-  text-align: center;
-}
+  text-align: center; }
 
 #versionDiv {
   position: fixed;
   bottom: 0%;
-  left: 0%;
-}
+  left: 0%; }
 
 /* -------------------------------------------- */
 /* -------------- MOBILE OPTIMIZATION -------------- */
 @media screen and (max-width: 600px) {
   h1 {
-    font-size: 4rem;
-  }
+    font-size: 4rem; }
 
   #postLoginDiv, #postLoginRow {
-    margin: 0;
-  }
+    margin: 0; }
 
   #notificationList {
-    width: 100%;
-  }
+    width: 100%; }
 
   #entryListDiv, #newEntryDiv, #adjustBalanceDiv, #adjustSavingsDiv {
     margin-left: 0;
     margin-right: 0;
-    padding-bottom: 1rem;
-  }
-  #entryListDiv .col-md-6, #newEntryDiv .col-md-6, #adjustBalanceDiv .col-md-6, #adjustSavingsDiv .col-md-6 {
-    margin-top: 1rem;
-  }
+    padding-bottom: 1rem; }
+    #entryListDiv .col-md-6, #newEntryDiv .col-md-6, #adjustBalanceDiv .col-md-6, #adjustSavingsDiv .col-md-6 {
+      margin-top: 1rem; }
 
   #adjustBalanceDiv input, #adjustSavingsDiv input {
-    min-height: 3rem;
-  }
+    min-height: 3rem; }
 
   .hideOnMobile {
-    display: none;
-  }
+    display: none; }
 
   select {
-    margin-bottom: 1rem;
-  }
+    margin-bottom: 1rem; }
 
   .textRight {
-    width: 50%;
-  }
+    width: 50%; }
 
   #intervalSelectTable {
     width: 100% !important;
-    margin-top: 1rem;
-  }
+    margin-top: 1rem; }
 
   #entryTable {
-    margin-top: 2rem !important;
-  }
+    margin-top: 2rem !important; }
 
   #amountInput {
     width: 100%;
-    margin-bottom: 1rem;
-  }
+    margin-bottom: 1rem; }
 
   #reloadListButton {
-    margin-top: 1rem;
-  }
+    margin-top: 1rem; }
 
   #selectDateCol {
-    display: none;
-  }
+    display: none; }
 
   #showAddDaysCol {
-    display: block !important;
-  }
-}
+    display: block !important; } }
 /* ------------------------------------------------- */
 /* -------------- ENTRY EDIT MODAL ----------------- */
 #editEntryModal .modal-header {
-  display: block;
-}
+  display: block; }
 #editEntryModal .row {
-  margin-bottom: 0.5rem;
-}
+  margin-bottom: 0.5rem; }
 #editEntryModal #editEntryDate, #editEntryModal #editEntryType, #editEntryModal #editEntryAmount, #editEntryModal #editEntryComment {
-  width: 100%;
-}
+  width: 100%; }
 
 /* ------------------------------------------------- */
 

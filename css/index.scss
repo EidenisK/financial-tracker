@@ -332,6 +332,16 @@ h2 {
 		}
 	}
 }
+
+#monthTable {
+	text-align: center;
+	width: 100%;
+
+	td, th {
+		border: 1px dashed black;
+		border-collapse: collapse;
+	}
+}
 /* ------------------------------------------ */
 
 /* ----------- NOTIFICATIONS ---------------- */

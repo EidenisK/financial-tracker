@@ -1,8 +1,5 @@
 function checkForUpdate() {
-  fetch(
-    `https://financial-tracker-b3c68.web.app/meta.json?${new Date().toString()}`
-  )
-    .then((resp) => resp.json())
+  fetch(`./meta.json`).then((resp) => resp.json())
     .then(function (data) {
       try {
         let currentVersion = $("#versionDiv").text();

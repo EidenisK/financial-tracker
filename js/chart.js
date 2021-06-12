@@ -11,7 +11,6 @@ $("#loadChartButton").on("click", async () => {
   // update configuration variables
 
   ctx = document.getElementById("statisticsChart").getContext("2d");
-  onlyNecessary = $("#showOnlyNecessaryCheckbox").is(":checked");
   includeErrorCorrection = $("#includeBalanceAdjustmentsCheckbox").is(
     ":checked"
   );
@@ -22,7 +21,11 @@ $("#loadChartButton").on("click", async () => {
   // by default, show the chart (and hide the list)
 
   $("#statisticsChart").show();
+  $("#statisticsChartDiv").show();
+
+  console.log("show stat chart div");
   $("#statisticsEntryListDiv").hide();
+  $("#monthTable").hide();
 
   let chartType = $("#chartTypes option:selected").val();
   switch (chartType) {
@@ -31,6 +34,9 @@ $("#loadChartButton").on("click", async () => {
       break;
     case "byMonth":
       await showByMonth();
+      break;
+    case "monthTable":
+      await showTable();
       break;
     default:
       await showByTime();
@@ -231,14 +237,112 @@ async function showByMonth() {
     barChartData.labels.push(monthNum);
 
     barChartData.datasets[0].data.push(
-      parseFloat(Math.abs(monthValues[monthNum][0]), 2)
+      parseFloat(
+        (Math.abs(monthValues[monthNum][0])).toFixed(2)
+      )
     );
     barChartData.datasets[1].data.push(
-      parseFloat(Math.abs(monthValues[monthNum][1]), 2)
+      parseFloat(
+        (Math.abs(monthValues[monthNum][1])).toFixed(2)
+      )
     );
   }
 
   showChart("bar", barChartData);
+}
+
+async function showTable() {
+  let monthValues = {};
+
+  let entries;
+  try {
+    entries = await getEntriesFromDB();
+  } catch (error) {
+    console.error(error);
+    showNotification(
+      "cannot display income and spending table",
+      RED,
+      "showTable",
+      error
+    );
+  }
+
+  let categories = {
+    family: {},
+    university_and_work: {},
+    rent: {},
+    necessary_expenses: {},
+    unnecessary_expenses: {},
+    savings: {}
+  };
+
+  entries.forEach(function (entry) {
+    let monthID = moment(entry.date).startOf("month").format("YYYY-MM");
+
+    if(!categories.family[monthID]) categories.family[monthID] = 0;
+    if(!categories.university_and_work[monthID]) categories.university_and_work[monthID] = 0;
+    if(!categories.rent[monthID]) categories.rent[monthID] = 0;
+    if(!categories.necessary_expenses[monthID]) categories.necessary_expenses[monthID] = 0;
+    if(!categories.unnecessary_expenses[monthID]) categories.unnecessary_expenses[monthID] = 0;
+    if(!categories.savings[monthID]) categories.savings[monthID] = 0;
+
+    switch(entry.type) {
+      case "Family":            categories.family[monthID] += entry.amount; break;
+      case "University":        categories.university_and_work[monthID] += entry.amount; break;
+      case "Job":               categories.university_and_work[monthID] += entry.amount; break;
+      case "Other income":      categories.family[monthID] += entry.amount; break;
+      case "Food":              categories.necessary_expenses[monthID] += entry.amount; break;
+      case "Transportation":    categories.necessary_expenses[monthID] += entry.amount; break;
+      case "Leisure":           categories.unnecessary_expenses[monthID] += entry.amount; break;
+      case "Rent":              categories.rent[monthID] += entry.amount; break;
+      case "Into savings":      categories.savings[monthID] += entry.amount; break;
+      case "Gift":              categories.unnecessary_expenses[monthID] += entry.amount; break;
+      case "University items":  categories.necessary_expenses[monthID] += entry.amount; break;
+      case "Household":         categories.necessary_expenses[monthID] += entry.amount; break;
+      case "Other spending":    categories.unnecessary_expenses[monthID] += entry.amount; break;
+      case "Error correction":  entry.amount > 0 
+        ? categories.family[monthID] += entry.amount 
+        : categories.necessary_expenses[monthID] += entry.amount; 
+        break;
+      case "Default":           entry.amount > 0
+        ? categories.family[monthID] += entry.amount
+        : categories.necessary_expenses[monthID] += entry.amount;
+        break;
+    }
+
+    monthValues[monthID] = true;
+  });
+
+  let tableString = `<tr><th></th>
+    <th>University & Job</th>
+    <th>Family & Other</th>
+    <th>Rent & Bills</th>
+    <th>Necessary expenses</th>
+    <th>Unnecessary expenses</th>
+    <th>Into savings</th>
+    <th>INCOME</th>
+    <th>EXPENSES</th>
+    <th>DIFFERENCE</th></tr>`;  
+
+  for(const monthID in monthValues) {
+    let incomeSum = categories.family[monthID] + categories.university_and_work[monthID];
+    let expenseSum = categories.rent[monthID] + categories.necessary_expenses[monthID] + categories.unnecessary_expenses[monthID];
+
+    tableString += `<tr><td>${monthID}</td>
+    <td>${categories.university_and_work[monthID].toFixed(2)}</td>
+    <td>${categories.family[monthID].toFixed(2)}</td>
+    <td>${categories.rent[monthID].toFixed(2)}</td>
+    <td>${categories.necessary_expenses[monthID].toFixed(2)}</td>
+    <td>${categories.unnecessary_expenses[monthID].toFixed(2)}</td>
+    <td>${categories.savings[monthID].toFixed(2)}</td>
+    <td>${incomeSum.toFixed(2)}</td>
+    <td>${expenseSum.toFixed(2)}</td>
+    <td>${(incomeSum + expenseSum).toFixed(2)}</td></tr>`;
+  }
+
+  $("#monthTable").html(tableString);
+  $("#monthTable").show();
+  $("#statisticsChartDiv").hide();
 }
 
 /**
@@ -269,8 +373,7 @@ async function getEntriesFromDB(ignoreDateInterval, ignoreCheckboxes) {
   snap.forEach(function (doc) {
     if (
       !ignoreCheckboxes &&
-      ((!doc.data().necessary && onlyNecessary) ||
-        (doc.data().errorCorrection && !includeErrorCorrection))
+      doc.data().errorCorrection && !includeErrorCorrection
     ) {
       return;
     }

@@ -53,7 +53,7 @@
     <label for="passwordInput">Password</label><br>
     <input type="password" id="passwordInput" onkeydown="loginWithEnter(event)"><br>
     <button id="loginButton" onClick="tryLogIn()">Login</button>
-    <div id="versionDiv">v2021.02.03</div>
+    <div id="versionDiv">v2021.04.14</div>
   </div>
   <!--------------------------------------->
 
@@ -161,15 +161,6 @@
             </div>
           </div>
 
-          <div class="row" id="notNecessaryRow">
-            <div class="col">
-              <label for="notNecessaryCheckbox" id="notNecessaryLabel">Not necessary spending:</label>
-            </div>
-            <div class="col" id="notNecessaryCheckBoxCol">
-              <input type="checkbox" id="notNecessaryCheckbox" checked="false">
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-md-12">
               <label for="commentInput">Comment:</label><br>
@@ -225,12 +216,11 @@
             <option value="balance">Balance By Date</option>
             <option value="income&spending">Entries By Category</option>
             <option value="byMonth">Income & Spending by Month</option>
+            <option value="monthTable">Income & Spending Table</option>
           </select><br>
 
           <label for="includeBalanceAdjustmentsCheckbox">Include balance adjustments:</label>
           <input type="checkbox" checked="false" id="includeBalanceAdjustmentsCheckbox">
-          <label for="showOnlyNecessaryCheckbox">Show only necessary entries</label>
-          <input type="checkbox" checked="false" id="showOnlyNecessaryCheckbox">
         </div>
         <div class="col-md-4">
           <label for="inputDateStart">Select start date: </label>
@@ -246,6 +236,7 @@
         <select id="statisticsEntryListSelect"></select>
         <table id="statisticsEntryList"></table>
       </div>
+      <table id="monthTable"></table>
     </div>
   </div> <!-- post login div -->
 
@@ -276,14 +267,6 @@
             </div>
             <div class="col">
               <select id="editEntryType"></select> <!-- filled on runtime by index.js -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              Necessary
-            </div>
-            <div class="col">
-              <input type="checkbox" id="editEntryNecessary">
             </div>
           </div>
           <div class="row">

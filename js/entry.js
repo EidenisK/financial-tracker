@@ -7,8 +7,7 @@ var entryConverter = {
       date: firebase.firestore.Timestamp.fromDate(entry.date),
       amount: entry.amount,
       type: entry.type,
-      comment: entry.comment,
-      necessary: entry.necessary,
+      comment: entry.comment
     };
   },
   fromFirestore: function (snapshot, options) {
@@ -20,7 +19,6 @@ var entryConverter = {
       amount: parseFloat(data.amount),
       type: data.type,
       comment: data.comment,
-      necessary: data.necessary ?? true,
       // derivated properties
       formattedDate: moment(date).format("YYYY-MM-DD HH:mm:ss"),
       shortDate: moment(date).format("YYYY-MM-DD"),
@@ -30,7 +28,6 @@ var entryConverter = {
       entryIcon: `<i class="${
         entryTypes[data.type]?.icon ?? entryTypes["Default"].icon
       }"></i>`,
-      iconClass: data.necessary ? "borderedIcon" : "",
       entryClass:
         entryTypes[data.type]?.entryClass ?? entryTypes["Default"].entryClass,
       entryIconId:
@@ -43,8 +40,8 @@ var entryConverter = {
  * Downloads entry list from Firebase API
  */
 function fetchEntryList() {
-  const intervalEnd = new Date($("#entriesDateEnd").val());
-  const intervalStart = new Date($("#entriesDateStart").val());
+  const intervalEnd = moment($("#entriesDateEnd").val()).endOf("day").toDate();
+  const intervalStart = moment($("#entriesDateStart").val()).startOf("day").toDate();
   intervalEnd.setDate(intervalEnd.getDate() + 1); // include current day
 
   entries = {};
@@ -96,7 +93,7 @@ function loadEntryList() {
     entryList.append(
       `<tr id="tableRow${$("#entryTable tr").length}">` +
       `<td>${entry.dateMMDD}</td>` +
-      `<td><li class="${entry.iconClass}" id="${entry.entryIconId}">${entry.entryIcon}</li></td>` +
+      `<td><li id="${entry.entryIconId}">${entry.entryIcon}</li></td>` +
       `<td class="${entry.entryClass}">${entry.amount} €</td>` +
       `<td>${entry.comment}</td>` +
       `<td class="hideOnMobile"><button onClick="showEditEntry('${entryID}')">Edit</button></td>` +
@@ -135,6 +132,7 @@ function deleteEntry(silentRemoval) {
 function submitEntry() {
   // get and validate entry amount
   const valueInputString = $("#amountInput").val();
+
   if (isNaN(valueInputString)) {
     showNotification(
       "error reading entry amount",
@@ -155,8 +153,7 @@ function submitEntry() {
     amount: parseFloat(valueInputString),
     date: moment().subtract(-daysToSubtract, "days").toDate(),
     comment: $("#commentInput").val(),
-    type: selectedTypeString,
-    necessary: !$("#notNecessaryCheckbox").prop("checked"),
+    type: selectedTypeString
   };
 
   // upload
@@ -182,8 +179,7 @@ $("#editEntrySaveButton").on("click", async () => {
     date: new Date($("#editEntryDate").val()),
     amount: parseFloat($("#editEntryAmount").val()),
     comment: $("#editEntryComment").val(),
-    type: $("#editEntryType").val(),
-    necessary: $("#editEntryNecessary").prop("checked"),
+    type: $("#editEntryType").val()
   };
 
   try {

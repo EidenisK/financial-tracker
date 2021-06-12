@@ -34,7 +34,6 @@ function showEditEntry(entryID) {
     $("#editEntryAmount").val(entries[currentEntryID].amount);
     $("#editEntryComment").val(entries[currentEntryID].comment);
     $("#editEntryType").val(entries[currentEntryID].type);
-    $("#editEntryNecessary").prop("checked", entries[currentEntryID].necessary);
     
     $("#editEntryModal").modal(); // show dialog
   }

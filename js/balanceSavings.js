@@ -51,11 +51,9 @@ function increaseBalance(amount) {
 function updateSavings() {
   if (
     !confirm(
-      `Do you want to adjust savings from ${
-        $("#savingsField").val()
-      } to ${
-        parseFloat($("#adjustedSavingsInput").val())
-      }?`
+      `Do you want to adjust savings from ${$(
+        "#savingsField"
+      ).val()} to ${parseFloat($("#adjustedSavingsInput").val())}?`
     )
   )
     return;
@@ -80,7 +78,9 @@ function updateSavings() {
 function adjustBalance() {
   if (
     !confirm(
-      `Do you want to adjust balance from ${currentBalance} to ${newBalance} ?`
+      `Do you want to adjust balance from ${currentBalance} to ${parseFloat(
+        $("#adjustedBalanceInput").val()
+      )} ?`
     )
   )
     return;
@@ -123,7 +123,18 @@ function adjustBalance() {
  */
 function tryFixAmount() {
   const valueString = $("#amountInput").val();
-  const replString = valueString.replace(",", ".");
+  let replString = valueString.replace(",", ".");
+
+  // if amount is entered as a sum, try calculating it
+  if(replString.includes('+') && !replString.includes('-')) {
+    let numbers = replString.split('+');
+
+    let sum = 0;
+    for(const numString of numbers) {
+      sum += parseFloat(numString.trim());
+    }
+    replString = sum.toFixed(2);
+  }
 
   if (!isNaN(replString)) $("#amountInput").val(replString);
 }
